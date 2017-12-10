@@ -14,6 +14,7 @@ int main(int argc, char * argv[]) {
 	const double ms = 1000 / amountofticks;
 	double delta = 0;
 
+	//Game Loop
 	while (game->running()) {
 
 		Uint64 now = SDL_GetTicks();
