@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include "GameObject.h"
 #include "Components.h"
+#include "Vector2D.h"
 
 EntityManager manager;
 
@@ -64,8 +65,8 @@ void Game::handleEvents() {
 void Game::update()	{
 	manager.refresh();
 	manager.update();
-
-	if (player.getComponent<TransformComponent>().x() > 100) {
+	player.getComponent<TransformComponent>().position.Add(Vector2D(5, 0));
+	if (player.getComponent<TransformComponent>().position.x > 100) {
 		player.getComponent<SpriteComponent>().setTexture("assets/enemy.png");
 	}
 }
