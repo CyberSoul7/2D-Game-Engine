@@ -2,14 +2,13 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "GameObject.h"
-
-#include "ECS.h"
 #include "Components.h"
 
-GameObject* player;
-
 EntityManager manager;
-auto& newPlayer(manager.addEntity());
+
+SDL_Renderer* Game::renderer = nullptr;
+
+auto& player(manager.addEntity());
 
 Game::Game()
 {}
@@ -45,10 +44,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 		isRunning = false;
 	}
 
-	player = new GameObject("assets/player.png", 0, 0);
-	player->setVelX(1);
-
-	newPlayer.addComponent<PositionComponent>();
+	player.addComponent<PositionComponent>();
+	player.addComponent<SpriteComponent>("assets/player.png");
 
 }
 
@@ -65,17 +62,18 @@ void Game::handleEvents() {
 }
 
 void Game::update()	{
-	player->update();
+	manager.refresh();
 	manager.update();
-	std::cout << newPlayer.getComponent<PositionComponent>().x() << ", " <<
-		newPlayer.getComponent<PositionComponent>().y() << std::endl;
+
+	if (player.getComponent<PositionComponent>().x() > 100) {
+		player.getComponent<SpriteComponent>().setTexture("assets/enemy.png");
+	}
 }
 
 void Game::render() {
 	SDL_RenderClear(renderer);
 	//Start Rendering
 
-	player->render(renderer);
 	manager.draw();
 
 	//Stop Rendering

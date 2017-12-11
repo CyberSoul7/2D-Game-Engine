@@ -28,9 +28,9 @@ void GameObject::update() {
 
 }
 
-void GameObject::render(SDL_Renderer* renderer) {
+void GameObject::render() {
 	if (!objTexture) {
-		objTexture = TextureManager::LoadTexture(texturesheet, renderer);
+		objTexture = TextureManager::LoadTexture(texturesheet);
 	}
-	SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
+	SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
 }

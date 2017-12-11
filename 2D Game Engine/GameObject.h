@@ -8,10 +8,7 @@ public:
 	~GameObject();
 
 	void update();
-	void render(SDL_Renderer* ren);
-
-	void registerObject();
-	void unregisterObject();
+	void render();
 	
 	int getX() {
 		return xpos;
