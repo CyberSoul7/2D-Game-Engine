@@ -3,7 +3,13 @@
 #include "TextureManager.h"
 #include "GameObject.h"
 
+#include "ECS.h"
+#include "Components.h"
+
 GameObject* player;
+
+EntityManager manager;
+auto& newPlayer(manager.addEntity());
 
 Game::Game()
 {}
@@ -42,6 +48,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 	player = new GameObject("assets/player.png", 0, 0);
 	player->setVelX(1);
 
+	newPlayer.addComponent<PositionComponent>();
+
 }
 
 void Game::handleEvents() {
@@ -58,6 +66,9 @@ void Game::handleEvents() {
 
 void Game::update()	{
 	player->update();
+	manager.update();
+	std::cout << newPlayer.getComponent<PositionComponent>().x() << ", " <<
+		newPlayer.getComponent<PositionComponent>().y() << std::endl;
 }
 
 void Game::render() {
@@ -65,6 +76,7 @@ void Game::render() {
 	//Start Rendering
 
 	player->render(renderer);
+	manager.draw();
 
 	//Stop Rendering
 	SDL_RenderPresent(renderer);

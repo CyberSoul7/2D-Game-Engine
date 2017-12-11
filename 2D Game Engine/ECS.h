@@ -62,7 +62,7 @@ public:
 		components.emplace_back(std::move(uPtr));
 
 		componentArray[getComponentTypeID<T>()] = c;
-		ComponentBitSet[getComponentTypeID<T>()] = true;
+		componentBitSet[getComponentTypeID<T>()] = true;
 
 		c->init();
 		return *c;
