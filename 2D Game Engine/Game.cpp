@@ -44,7 +44,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 		isRunning = false;
 	}
 
-	player.addComponent<PositionComponent>();
+	player.addComponent<TransformComponent>();
 	player.addComponent<SpriteComponent>("assets/player.png");
 
 }
@@ -65,7 +65,7 @@ void Game::update()	{
 	manager.refresh();
 	manager.update();
 
-	if (player.getComponent<PositionComponent>().x() > 100) {
+	if (player.getComponent<TransformComponent>().x() > 100) {
 		player.getComponent<SpriteComponent>().setTexture("assets/enemy.png");
 	}
 }
