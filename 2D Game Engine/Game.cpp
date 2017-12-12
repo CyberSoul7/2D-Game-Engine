@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Components.h"
 #include "Vector2D.h"
+#include "Collision.h"
 
 EntityManager manager;
 
@@ -26,17 +27,14 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 
-		std::cout << "Subsystems Initialized!..." << std::endl;
-
 		window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
 		if (window) {
-			std::cout << "Window created!" << std::endl;
+			
 		}
 
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer) {
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-			std::cout << "Renderer created!" << std::endl;
 		}
 
 		isRunning = true;
@@ -46,9 +44,10 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 		isRunning = false;
 	}
 
-	player.addComponent<TransformComponent>();
+	player.addComponent<TransformComponent>(2);
 	player.addComponent<SpriteComponent>("assets/player.png");
 	player.addComponent<KeyboardController>();
+	player.addComponent<ColliderComponent>("player");
 
 }
 
@@ -67,6 +66,7 @@ void Game::handleEvents() {
 void Game::update()	{
 	manager.refresh();
 	manager.update();
+
 }
 
 void Game::render() {
