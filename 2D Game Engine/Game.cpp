@@ -15,6 +15,10 @@ std::vector<ColliderComponent*> Game::colliders;
 
 auto& player(manager.addEntity());
 
+auto& tile0(manager.addEntity());
+auto& tile1(manager.addEntity());
+auto& tile2(manager.addEntity());
+
 Game::Game()
 {}
 Game::~Game()
@@ -46,6 +50,14 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 		isRunning = false;
 	}
 
+	//ecs init
+
+	tile0.addComponent<TileComponent>(200, 200, 32, 32, WATER);
+	tile1.addComponent<TileComponent>(250, 250, 32, 32, DIRT);
+	tile1.addComponent<ColliderComponent>("dirt");
+	tile2.addComponent<TileComponent>(150, 150, 32, 32, GRASS);
+	tile2.addComponent<ColliderComponent>("grass");
+
 	player.addComponent<TransformComponent>(2);
 	player.addComponent<SpriteComponent>("assets/player.png");
 	player.addComponent<KeyboardController>();
@@ -69,6 +81,10 @@ void Game::update()	{
 	manager.refresh();
 	manager.update();
 
+	for (auto cc : colliders) {
+		Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
+	}
+	
 }
 
 void Game::render() {
